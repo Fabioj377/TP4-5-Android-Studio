@@ -1,6 +1,6 @@
 package com.example.productexplorer
 
-import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.Card
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
@@ -36,7 +35,7 @@ fun ProductHeader(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
             text = product.title,
@@ -66,7 +65,7 @@ fun ProductDetailScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
-        verticalArrangement = spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         ProductHeader(product = product)
 
@@ -138,7 +137,7 @@ fun ProductRating(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = spacedBy(4.dp)
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Icon(
             imageVector = Icons.Default.Star,
@@ -163,7 +162,7 @@ fun ProductAvailabilityCard(
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
                 text = if (product.stock > 0) {
@@ -189,7 +188,7 @@ fun ProductDescription(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
             text = "Description",
