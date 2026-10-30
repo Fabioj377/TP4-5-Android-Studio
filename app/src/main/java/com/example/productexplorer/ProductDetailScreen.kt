@@ -25,6 +25,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Button
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.productexplorer.ui.theme.ProductExplorerTheme
 
 
 @Composable
@@ -227,5 +229,16 @@ fun AddToCartButton(
         modifier = modifier.fillMaxWidth()
     ) {
         Text(text = "Ajouter au panier")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProductDetailScreenOutOfStockPreview() {
+    ProductExplorerTheme {
+        ProductDetailScreen(
+            product = sampleProductOutOfStock(),
+            onAddToCartClick = {}
+        )
     }
 }
