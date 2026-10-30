@@ -21,25 +21,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Button
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
-@Composable
-fun ProductDetailScreen(
-    product: ProductUi,
-    onAddToCartClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = spacedBy(16.dp)
-    ) {
-        ProductHeader(product = product)
-        ProductImage()
-        ProductPriceCard(product = product)
-        ProductRating(rating = product.rating)
-    }
-}
 
 @Composable
 fun ProductHeader(
@@ -63,6 +49,43 @@ fun ProductHeader(
         Text(
             text = product.category,
             style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Composable
+fun ProductDetailScreen(
+    product: ProductUi,
+    onAddToCartClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = spacedBy(16.dp)
+    ) {
+        ProductHeader(product = product)
+
+        ProductImage()
+
+        ProductPriceCard(product = product)
+
+        ProductRating(rating = product.rating)
+
+        ProductAvailabilityCard(product = product)
+
+        ProductDescription(
+            description = product.description
+        )
+
+        ProductWarrantyField(
+            warrantyInformation = product.warrantyInformation
+        )
+
+        AddToCartButton(
+            onClick = onAddToCartClick
         )
     }
 }
@@ -125,5 +148,84 @@ fun ProductRating(
             text = "$rating / 5",
             style = MaterialTheme.typography.bodyLarge
         )
+    }
+}
+
+@Composable
+fun ProductAvailabilityCard(
+    product: ProductUi,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = spacedBy(8.dp)
+        ) {
+            Text(
+                text = if (product.stock > 0) {
+                    "En stock : ${product.stock} unités"
+                } else {
+                    "Rupture de stock"
+                },
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Text(
+                text = product.shippingInformation,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+    }
+}
+
+@Composable
+fun ProductDescription(
+    description: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = spacedBy(8.dp)
+    ) {
+        Text(
+            text = "Description",
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Text(
+            text = description,
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Composable
+fun ProductWarrantyField(
+    warrantyInformation: String,
+    modifier: Modifier = Modifier
+) {
+    OutlinedTextField(
+        value = warrantyInformation,
+        onValueChange = {},
+        modifier = modifier.fillMaxWidth(),
+        label = {
+            Text(text = "Garantie")
+        },
+        readOnly = true
+    )
+}
+
+@Composable
+fun AddToCartButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Text(text = "Ajouter au panier")
     }
 }
