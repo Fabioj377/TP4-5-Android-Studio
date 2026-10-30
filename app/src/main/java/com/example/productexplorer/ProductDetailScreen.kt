@@ -1,32 +1,75 @@
 package com.example.productexplorer
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Card
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.height
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Icon
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Button
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.productexplorer.ui.theme.ProductExplorerTheme
 
+@Composable
+fun ProductDetailScreen(
+    product: ProductUi,
+    onAddToCartClick: () -> Unit,
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Button(
+            onClick = onBackClick
+        ) {
+            Text(text = "← Retour")
+        }
+
+        ProductHeader(product = product)
+
+        ProductImage()
+
+        ProductPriceCard(product = product)
+
+        ProductRating(rating = product.rating)
+
+        ProductAvailabilityCard(product = product)
+
+        ProductDescription(
+            description = product.description
+        )
+
+        ProductWarrantyField(
+            warrantyInformation = product.warrantyInformation
+        )
+
+        AddToCartButton(
+            onClick = onAddToCartClick
+        )
+    }
+}
 
 @Composable
 fun ProductHeader(
@@ -55,40 +98,17 @@ fun ProductHeader(
 }
 
 @Composable
-fun ProductDetailScreen(
-    product: ProductUi,
-    onAddToCartClick: () -> Unit,
+fun ProductImage(
     modifier: Modifier = Modifier
 ) {
-    Column(
+    Image(
+        painter = painterResource(id = R.drawable.product_phone),
+        contentDescription = "Image du produit",
         modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        ProductHeader(product = product)
-
-        ProductImage()
-
-        ProductPriceCard(product = product)
-
-        ProductRating(rating = product.rating)
-
-        ProductAvailabilityCard(product = product)
-
-        ProductDescription(
-            description = product.description
-        )
-
-        ProductWarrantyField(
-            warrantyInformation = product.warrantyInformation
-        )
-
-        AddToCartButton(
-            onClick = onAddToCartClick
-        )
-    }
+            .fillMaxWidth()
+            .height(220.dp),
+        contentScale = ContentScale.Fit
+    )
 }
 
 @Composable
@@ -117,19 +137,7 @@ fun ProductPriceCard(
         }
     }
 }
-@Composable
-fun ProductImage(
-    modifier: Modifier = Modifier
-) {
-    Image(
-        painter = painterResource(id = R.drawable.product_phone),
-        contentDescription = "Image du produit",
-        modifier = modifier
-            .fillMaxWidth()
-            .height(220.dp),
-        contentScale = ContentScale.Fit
-    )
-}
+
 @Composable
 fun ProductRating(
     rating: Double,
@@ -233,11 +241,24 @@ fun AddToCartButton(
 
 @Preview(showBackground = true)
 @Composable
+fun ProductDetailScreenPreview() {
+    ProductExplorerTheme {
+        ProductDetailScreen(
+            product = sampleProduct(),
+            onAddToCartClick = {},
+            onBackClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
 fun ProductDetailScreenOutOfStockPreview() {
     ProductExplorerTheme {
         ProductDetailScreen(
             product = sampleProductOutOfStock(),
-            onAddToCartClick = {}
+            onAddToCartClick = {},
+            onBackClick = {}
         )
     }
 }

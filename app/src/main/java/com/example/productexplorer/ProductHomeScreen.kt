@@ -14,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.Alignment
 
 @Composable
 fun ProductHomeScreen(
@@ -40,6 +42,12 @@ fun ProductHomeScreen(
         )
 
         Spacer(modifier = Modifier.height(24.dp))
+
+        CategoriesSection()
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        DailyOfferBox()
     }
 }
 
@@ -153,5 +161,106 @@ fun ProductQuickInfoRow(
             text = "$stock en stock",
             modifier = Modifier.weight(1f)
         )
+    }
+}
+
+@Composable
+fun CategoryChip(
+    label: String,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier,
+        shape = MaterialTheme.shapes.medium,
+        tonalElevation = 2.dp
+    ) {
+        Text(
+            text = label,
+            modifier = Modifier.padding(
+                horizontal = 12.dp,
+                vertical = 8.dp
+            ),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Composable
+fun CategoriesSection(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            text = "Catégories",
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            CategoryChip(label = "Smartphones")
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            CategoryChip(label = "Audio")
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            CategoryChip(label = "Maison")
+        }
+    }
+}
+
+@Composable
+fun DailyOfferBox(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(120.dp)
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            shape = MaterialTheme.shapes.large,
+            tonalElevation = 3.dp
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(
+                    text = "Offre du jour",
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "Jusqu'à -20 % sur une sélection de produits",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
+
+        Surface(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(8.dp),
+            shape = MaterialTheme.shapes.small,
+            tonalElevation = 6.dp
+        ) {
+            Text(
+                text = "Nouveau",
+                modifier = Modifier.padding(
+                    horizontal = 8.dp,
+                    vertical = 4.dp
+                ),
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
     }
 }
