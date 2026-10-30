@@ -20,9 +20,11 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
-                    ProductDetailScreen(
-                        product = sampleProduct(),
-                        onAddToCartClick = { /* Action later */ },
+                    ProductHomeScreen(
+                        featuredProduct = sampleProduct(),
+                        onFeaturedProductClick = {
+                            // Plus tard : ouvrir le détail du produit
+                        },
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
