@@ -50,7 +50,7 @@ fun ProductExplorerTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = ProductTypography,
         shapes = ProductShapes,
         content = content
     )
