@@ -91,3 +91,8 @@ fun sampleProducts(): List<ProductUi> {
         )
     )
 }
+
+
+fun sampleCategories(): List<String> {
+    return listOf("Smartphones", "Audio", "Wearables", "Maison")
+}
