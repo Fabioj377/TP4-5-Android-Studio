@@ -44,8 +44,6 @@ class MainActivity : ComponentActivity() {
                         )
                     } else {
                         ProductCatalogContainer(
-                            products = sampleProducts(),
-                            categories = sampleCategories(),
                             onProductClick = {
                                 // Plus tard : ouvrir le détail du produit
                             },
