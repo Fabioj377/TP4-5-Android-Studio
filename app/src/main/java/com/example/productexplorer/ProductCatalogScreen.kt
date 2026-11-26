@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -36,6 +37,14 @@ fun ProductCatalogScreen(
 ) {
     var searchQuery by rememberSaveable {
         mutableStateOf("")
+    }
+
+    val filteredProducts = remember(products, searchQuery) {
+        products.filter { product ->
+            product.title.contains(searchQuery, ignoreCase = true) ||
+                    product.brand.contains(searchQuery, ignoreCase = true) ||
+                    product.category.contains(searchQuery, ignoreCase = true)
+        }
     }
 
     LazyColumn(
