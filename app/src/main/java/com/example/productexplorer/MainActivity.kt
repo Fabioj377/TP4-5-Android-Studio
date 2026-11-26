@@ -43,10 +43,10 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(innerPadding)
                         )
                     } else {
-                        ProductHomeScreen(
-                            featuredProduct = sampleProduct(),
-                            onFeaturedProductClick = {
-                                showProductDetail = true
+                        ProductCatalogScreen(
+                            products = sampleProducts(),
+                            onProductClick = {
+                                // Plus tard : ouvrir le détail du produit
                             },
                             modifier = Modifier.padding(innerPadding)
                         )
