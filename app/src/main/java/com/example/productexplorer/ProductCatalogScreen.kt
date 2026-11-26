@@ -47,6 +47,14 @@ fun ProductCatalogScreen(
         mutableStateOf(listOf<Int>())
     }
 
+    fun toggleFavorite(productId: Int) {
+        favoriteProductIds = if (favoriteProductIds.contains(productId)) {
+            favoriteProductIds - productId
+        } else {
+            favoriteProductIds + productId
+        }
+    }
+
     val filteredProducts = remember(products, searchQuery, showOnlyInStock) {
         products.filter { product ->
             val matchesSearch =
