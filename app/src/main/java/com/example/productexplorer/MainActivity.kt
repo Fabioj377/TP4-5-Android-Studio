@@ -43,8 +43,9 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(innerPadding)
                         )
                     } else {
-                        ProductCatalogScreen(
+                        ProductCatalogContainer(
                             products = sampleProducts(),
+                            categories = sampleCategories(),
                             onProductClick = {
                                 // Plus tard : ouvrir le détail du produit
                             },
