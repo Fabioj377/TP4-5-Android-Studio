@@ -1,5 +1,6 @@
 package com.example.productexplorer
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,7 +29,9 @@ fun ProductCatalogScreen(
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         contentPadding = PaddingValues(16.dp),
         // Ajoute une marge intérieure autour du contenu de la liste
         verticalArrangement = Arrangement.spacedBy(16.dp)
