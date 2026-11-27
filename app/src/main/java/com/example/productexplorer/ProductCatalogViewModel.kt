@@ -4,6 +4,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 data class ProductCatalogUiState(
     val products: List<ProductUi> = emptyList(),
@@ -16,6 +19,28 @@ data class ProductCatalogUiState(
 class ProductCatalogViewModel : ViewModel() {
 
     private val allProducts: List<ProductUi> = sampleProducts()
+    private val allCategories: List<String> = sampleCategories()
+
+    private val _uiState = MutableStateFlow(
+        ProductCatalogUiState(
+            products = allProducts,
+            categories = allCategories
+        )
+    )
+
+    val uiState: StateFlow<ProductCatalogUiState> = _uiState.asStateFlow()
+
+    private fun filterProducts(searchQuery: String, showOnlyInStock: Boolean): List<ProductUi> {
+        return allProducts.filter { product ->
+            val matchesSearch =
+                product.title.contains(searchQuery, ignoreCase = true) ||
+                        product.brand.contains(searchQuery, ignoreCase = true) ||
+                        product.category.contains(searchQuery, ignoreCase = true)
+            val matchesStock =
+                !showOnlyInStock || product.stock > 0
+            matchesSearch && matchesStock
+        }
+    }
 
     val categories: List<String> = sampleCategories()
 
