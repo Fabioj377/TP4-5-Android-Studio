@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 data class ProductCatalogUiState(
     val products: List<ProductUi> = emptyList(),
@@ -67,18 +68,43 @@ class ProductCatalogViewModel : ViewModel() {
         }
 
     fun onSearchQueryChange(newValue: String) {
-        searchQuery = newValue
+        _uiState.update { currentState ->
+            currentState.copy(
+                searchQuery = newValue,
+                products = filterProducts(
+                    searchQuery = newValue,
+                    showOnlyInStock = currentState.showOnlyInStock
+                )
+            )
+        }
     }
 
     fun onToggleStockFilter() {
-        showOnlyInStock = !showOnlyInStock
+        _uiState.update { currentState ->
+            val newShowOnlyInStock = !currentState.showOnlyInStock
+
+            currentState.copy(
+                showOnlyInStock = newShowOnlyInStock,
+                products = filterProducts(
+                    searchQuery = currentState.searchQuery,
+                    showOnlyInStock = newShowOnlyInStock
+                )
+            )
+        }
     }
 
     fun onFavoriteClick(productId: Int) {
-        favoriteProductIds = if (favoriteProductIds.contains(productId)) {
-            favoriteProductIds - productId
-        } else {
-            favoriteProductIds + productId
+        _uiState.update { currentState ->
+            val newFavoriteIds =
+                if (currentState.favoriteProductIds.contains(productId)) {
+                    currentState.favoriteProductIds - productId
+                } else {
+                    currentState.favoriteProductIds + productId
+                }
+
+            currentState.copy(
+                favoriteProductIds = newFavoriteIds
+            )
         }
     }
 }
